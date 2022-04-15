@@ -1,6 +1,6 @@
-from flask import render_template, request, Flask, url_for
 import sqlite3
 
+from flask import render_template, request, Flask, url_for
 from werkzeug.utils import redirect
 
 sql_insert_userinfo = 'insert into userinfo(id,username,depart,idnumber,sex) values(?,?,?,?,?)'
