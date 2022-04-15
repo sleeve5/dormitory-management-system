@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>top</title>
+<script type="text/javascript" src="jquery-1.11.3.min.js"></script>
+<style type="text/css">
+* {	margin: 0;	padding: 0;}
+body{overflow: hidden;position: relative;background: rgb(201,203,255);}
+h3.title {	line-height: 60px;margin-left: 5px;color: #2d48d3;}
+span#time{position: absolute;right: 10px;top: 50%;transform: translate(0,-50%);color: rgb(255, 0, 0);}
+.noselect{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
+</style>
+</head>
+<body class="noselect">
+	<h3 class="title">西南交通大学寝室管理系统</h3>
+	<span id="time"></span>
+
+	<script type="text/javascript">
+		function getDate() {
+
+			var timezone = 8;
+			var offset_GMT = new Date().getTimezoneOffset();
+			var nowDate = new Date().getTime();
+
+			var today = new Date(nowDate + offset_GMT * 60 * 1000 + timezone
+					* 60 * 60 * 1000);
+			var date = today.getFullYear() + "年"
+					+ twoDigits(today.getMonth() + 1) + "月"
+					+ twoDigits(today.getDate()) +"日";
+			var time = twoDigits(today.getHours()) + ":"
+					+ twoDigits(today.getMinutes()) + ":"
+					+ twoDigits(today.getSeconds());
+			$("#time").html('当前时间：' + date + '  ' + time);
+		}
+
+		function twoDigits(val) {
+			if (val < 10)
+				return "0" + val;
+			return val;
+		}
+		$(function() {
+			setInterval(getDate, 1000);
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        p span{display: inline-block;width: 200px;}
+    </style>
+</head>
+<body>
+<form action="{{ url_for('addcourse') }}" method="post">
+    <p><span>id: </span><input type="text" name="id" required></p>
+    <p><span>courseid: </span><input type="text" name="courseid" required></p>
+    <p><span>coursename: </span><input type="text" name="coursename" required></p>
+    <p><span>teachername: </span><input type="text" name="teachername" required></p>
+    <p><span>score: </span><input type="number" name="score" required></p>
+    <input type="submit" value="submit">&nbsp;&nbsp;
+    <input type="reset" value="reset">
+
+</form>
+</body>
+</html>

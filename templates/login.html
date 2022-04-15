@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <style type="text/css">
+        p span{display:inline-block;width: 200px;}
+
+    </style>
+</head>
+<body>
+<form action="{{ url_for('login') }}" method="post">
+    <p><span>id: </span><input type="text" name="id" required autocomplete="off"></p>
+    <p><span>password: </span><input type="password" name="password" required></p>
+    <input type="submit" value="submit">
+    <input type="reset" value="reset">
+</form>
+    {% if msg %}
+        <p><strong>Error</strong>: {{ msg }}</p>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,4 @@
+table{border-collapse:collapse;border: 1px solid black;width: 100%;}
+tr,th,td{border: 1px solid orange;}
+table th{background: rgb(198,118,72);}
+table tr:hover td{background: #2954ff;}

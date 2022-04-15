@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='style.css')}}">
+</head>
+   <body>
+      <table>
+         <thead>
+            <th>帐号</th>
+            <th>学院</th>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>寝室号</th>
+            <th>寝室长姓名</th>
+            <th>学生用水量</th>
+            <th>操作</th>
+         </thead>
+
+         {% for row in rows %}
+            <tr>
+               <td>{{row["id"]}}</td>
+               <td>{{row["depart"]}}</td>
+               <td>{{row["username"]}}</td>
+               <td>{{row['sex']}}</td>
+               <td>{{row['coursename']}}</td>
+               <td>{{row['teachername']}}</td>
+                <td>{{row['score']}}</td>
+               <td>
+                  <a href="deleteusercourse/{{row['id']}}"  onClick="return confirm('确定删除{{ row['coursename'] }}寝室中的 {{row['username']}} ?');">删除学生</a>&nbsp;&nbsp;
+                  <a href="deletecourse/{{row['courseid']}}"  onClick="return confirm('确定删除 {{row['coursename']}} 寝室?');">删除寝室</a>
+               </td>
+            </tr>
+         {% endfor %}
+      </table>
+
+   </body>
+</html>

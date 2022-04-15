@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='style.css')}}">
+   <style>
+      a{display:inline-block;margin: 5px 0;border-radius: 4px;background: rgb(255,229,185);text-decoration: none;}
+   </style>
+</head>
+   <body>
+      <table>
+         <thead>
+            <th>帐号</th>
+            <th>姓名</th>
+            <th>学院</th>
+            <th>手机号</th>
+            <th>性别</th>
+            <th>操作</th>
+         </thead>
+
+         {% for row in rows %}
+            <tr>
+               <td>{{row["id"]}}</td>
+               <td>{{row["username"]}}</td>
+               <td> {{ row["depart"]}}</td>
+               <td>{{row['idnumber']}}</td>
+               <td>{{row['sex']}}</td>
+               <td>
+                  <a href="getuserinfo/{{row['id']}}">修改</a>&nbsp;&nbsp;
+                  <a href="deleteuserinfo/{{row['id']}}"  onClick="return confirm('确定删除 {{row['username']}}的所有信息吗？');">删除</a>
+               </td>
+            </tr>
+         {% endfor %}
+      </table>
+
+   </body>
+</html>

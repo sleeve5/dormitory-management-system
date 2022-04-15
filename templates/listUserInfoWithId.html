@@ -1,0 +1,36 @@
+<html>
+<style type='text/css'>
+   p span{display:inline-block;width: 100px;}
+
+</style>
+   <body>
+   <h3>view and update user</h3>
+{% for row in row %}
+      <form action = "{{ url_for('updateuserinfo') }}" method = "POST">
+
+
+         <p><span>id: </span><input type = "number" name = "id" value="{{row.id}}" required/></p>
+         <p><span>username: </span><input type="text" name="username" value="{{row['username']}}" required></p>
+         <p><span>depart: </span>
+         <select name="depart" value="{{row['depart']}}">
+            <option value="信息科学与技术学院">信息科学与技术学院</option>
+            <option value="计算机与人工智能学院">计算机与人工智能学院</option>
+            <option value="机械工程学院">机械工程学院</option>
+            <option value="外国语学院">外国语学院</option>
+         </select>
+         </p>
+         <p><span>idnumber: </span><input type="text" name="idnumber" value="{{row['idnumber']}}" required></p>
+         <p><span>sex: </span>
+            <select name="sex" value="{{row.sex}}">
+               <option value="male">male</option>
+               <option value="female">female</option>
+            </select>
+         </p>
+
+         <input type = "submit" value = "submit" />
+         <input type="reset" value="reset">
+
+      </form>
+   {% endfor %}
+   </body>
+</html>

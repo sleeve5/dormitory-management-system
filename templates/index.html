@@ -1,0 +1,9 @@
+<html>
+<frameset rows="60,*">
+	<frame src="{{url_for('static',filename='top.html')}}" noresize="noresize">
+	<frameset cols="200,*">
+	  <frame src="{{url_for('static',filename='menu.html')}}" noresize="noresize">
+	  <frame src="{{url_for('static',filename='welcome.html')}}" name="view_frame">
+	</frameset>
+</frameset>
+</html>
