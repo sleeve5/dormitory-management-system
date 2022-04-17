@@ -11,14 +11,13 @@
         }
         html, body {
             height: 100%;
-            height: 100%;
         }
         body{
         margin: 0;
         padding: 0;
         font-family: sans-serif;
             background-size: cover;
-            background: url(../static/login.jpg) no-repeat fixed center 0;
+            background: url(../static/images/login.jpg) no-repeat fixed center 0;
             -webkit-background-size: cover;
           -o-background-size: cover;
           -moz-background-size: cover;
@@ -167,25 +166,10 @@
             color: #fff;
             border: none;
             border-radius: 5px;
-            width: 120px;
+            width: 160px;
             text-align: center;
             cursor: pointer;
             background: #104fee;
-        }
-        .upload-pic-icon{
-            font-size: 14px;
-            font-family: Arial, Tahoma, Helvetica;
-            line-height: 32px;
-            url(../static/upload.png) no-repeat;
-            color: #fff;
-            text-align: center;
-            cursor: pointer;
-            width: 19px;
-            height: 19px;
-            display: inline-block;
-            position: relative;
-            top: 4px;
-            right: 4px;
         }
     </style>
 </head>
@@ -216,7 +200,7 @@
         </div>
     </div>
     <div class="footer-box">
-        <p>图片来源：网络      <button class="upload-pic-btn">我要上传图片</button></p>
+        <p>图片来源：网络      <button class="upload-pic-btn" onclick="window.open('https://bing.ioliu.cn/')">从必应壁纸上传图片</button></p>
     </div>
 </body>
 </html>
