@@ -18,7 +18,7 @@
         padding: 0;
         font-family: sans-serif;
             background-size: cover;
-            background: url(../static/login.jpeg) no-repeat fixed center 0;
+            background: url(../static/login.jpg) no-repeat fixed center 0;
             -webkit-background-size: cover;
           -o-background-size: cover;
           -moz-background-size: cover;
@@ -151,6 +151,42 @@
             background-color: #282c34;
             color: #61dafb;
         }
+        .footer-box{
+            font-family: Arial,Tahoma, Helvetica;
+            position: absolute;
+            right: 60px;
+            bottom: 60px;
+            color: #e2e2e2;
+            font-size: 15px;
+        }
+        .upload-pic-btn{
+            font-size: 14px;
+            font-family: Arial,Tahoma, Helvetica;
+            line-height: 32px;
+            height: 100%;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            width: 120px;
+            text-align: center;
+            cursor: pointer;
+            background: #104fee;
+        }
+        .upload-pic-icon{
+            font-size: 14px;
+            font-family: Arial, Tahoma, Helvetica;
+            line-height: 32px;
+            url(../static/upload.png) no-repeat;
+            color: #fff;
+            text-align: center;
+            cursor: pointer;
+            width: 19px;
+            height: 19px;
+            display: inline-block;
+            position: relative;
+            top: 4px;
+            right: 4px;
+        }
     </style>
 </head>
 <body>
@@ -179,6 +215,8 @@
                 {% endif %}
         </div>
     </div>
-
+    <div class="footer-box">
+        <p>图片来源：网络      <button class="upload-pic-btn">我要上传图片</button></p>
+    </div>
 </body>
 </html>
