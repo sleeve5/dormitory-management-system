@@ -39,7 +39,14 @@
             font-size: 28px;
             font-weight: bold;
             text-align: center;
-            line-height: 180px;
+            line-height: 100px;
+            color: #61dafb;
+        }
+        .header1 {
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 10px;
             color: #61dafb;
         }
         .container {
@@ -176,7 +183,8 @@
 <body>
     <div class="login">
         <form action="{{ url_for('login') }}" method="post">
-        <div class="header">欢迎登录寝室管理系统</div>
+        <div class="header">西南交大寝室管理系统</div>
+            <div class="header1">同学，欢迎登录</div>
         <div class="container">
             <input type="text" name="id" required autocomplete="off" placeholder="请输入帐号">
             <span class="left"></span>

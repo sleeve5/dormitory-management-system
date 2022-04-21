@@ -5,8 +5,8 @@
 <style type="text/css">
 *{margin:0;padding: 0;}
 ul li{list-style: none;padding-left: 4px;}
-a{display: block;text-decoration: none;margin: 4px 0;background: rgb(178, 178, 178);}
-a:hover {background: rgb(196, 196, 196)
+a{display: block;text-decoration: none;margin: 4px 0;background: rgba(2, 1, 1, 0.01);}
+a:hover {background: rgb(241, 235, 235)
 }
 .noselect{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
 h5:hover{cursor: pointer;}
@@ -20,10 +20,11 @@ body{
           -o-background-size: cover;
           -moz-background-size: cover;
           -ms-background-size: cover;
+    background: rgba(2, 1, 1, 0.01);
     }
 </style>
 </head>
-<body>
+<body style="background-color: #858383">
 <h5>首页</h5>
 <ul class="homepage">
   <li><a href="welcome.html" target="view_frame">主页</a></li>
@@ -48,7 +49,7 @@ body{
 
 <h5>水电分析</h5>
 <ul class="manageDepart">
-  <li><a href="/analize" target="view_frame">水电排名</a></li>
+  <li><a href="/analize" target="view_frame">水电信息</a></li>
 </ul>
 
 <h5>关于系统</h5>
@@ -58,7 +59,7 @@ body{
 
 <script type="text/javascript">
 $("body").addClass("noselect");
-$(":header").css({'color':'#000000','font-size':'20px','margin':'5px 0'});
+$(":header").css({'color':'#d7d7d7','font-size':'20px','margin':'5px 0'});
 $("ul").css({'border-radius':'8%','margin':'5px'});
 $("h5").next().slideUp(5);
 
