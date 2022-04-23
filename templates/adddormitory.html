@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        p span{display: inline-block;width: 200px;}
+    </style>
+</head>
+<body>
+<form action="{{ url_for('AddDormitory') }}" method="post">
+    <p><span>帐号</span><input type="text" name="id" required></p>
+    <p><span>寝室号</span><input type="text" name="coursename" required></p>
+    <p><span>寝室长姓名</span><input type="text" name="teachername" required></p>
+    <p><span>用水量</span><input type="number" name="score" required></p>
+    <input type="submit" value="确定">&nbsp;&nbsp;
+    <input type="reset" value="重置">
+
+</form>
+</body>
+</html>

@@ -7,37 +7,40 @@ sql_insert_userinfo = 'insert into userinfo(id,username,depart,idnumber,sex) val
 app = Flask(__name__)
 
 
-# 到主页
+# 主页
 @app.route('/home')
 def home():
     return render_template('index.html')
 
 
-# 到about.html
-@app.route('/abouthtml')
-def abouthtml():
+# 项目介绍
+@app.route('/about')
+def about():
     return render_template('about.html')
 
 
-# 使用md5加密密码比对
+# 使用md5加密(未使用)
 def md5(string):
-    # 创建md5对象
     c = string
     return c
 
 
-"""用户的信息userinfo表的操作"""
+"""
+
+用户信息操作
+
+"""
 
 
-# 添加学生啊
-@app.route('/addUser')
-def addUser():
+# 添加学生
+@app.route('/AddUser0')
+def AddUser0():
     return render_template('addUser.html')
 
 
-@app.route('/adduserrec', methods=['POST', 'GET'])
-def adduserrec():
-    msg = None
+@app.route('/AddUser', methods=['POST', 'GET'])
+def AddUser():
+    message = None
     if request.method == 'POST':
         try:
             id = request.form['id']
@@ -45,20 +48,18 @@ def adduserrec():
             depart = request.form['depart']
             idnumber = request.form['idnumber']
             sex = request.form['sex']
-            # print(id, username, depart, idnumber, sex)
             with sqlite3.connect("database.db") as con:
                 cur = con.cursor()
-                # print(id,username,depart,idnumber,sex)
                 cur.execute(sql_insert_userinfo, (id, username, depart, idnumber, sex))
                 cur.execute('insert into user(id,password,role) values(?,?,?)', (id, md5(str(id)), '学生'))
                 con.commit()
-                msg = "Record  " + id + "  successfully added"
+                message = id + "添加成功"
         except:
             con.rollback()
-            msg = "error in insert operation"
+            message = "添加错误"
 
         finally:
-            return render_template("result.html", msg=msg)
+            return render_template("result.html", msg=message)
 
 
 # 查看全部学生信息
@@ -78,16 +79,15 @@ def getuserinfo(id):
     con = sqlite3.connect("database.db")
     con.row_factory = sqlite3.Row
     cur = con.cursor()
-    # print(id,type(id))
     cur.execute("select * from userinfo where id=" + str(id))
     row = cur.fetchall()
     return render_template("listUserInfoWithId.html", row=row)
 
 
-# 更新学生信息
-@app.route('/updateuserinfo', methods=['POST', 'GET'])
-def updateuserinfo():
-    global msg
+# 修改学生信息
+@app.route('/modifyuser', methods=['POST', 'GET'])
+def modifyuser():
+    message = None
     try:
         id = request.form['id']
         username = request.form['username']
@@ -96,54 +96,57 @@ def updateuserinfo():
         sex = request.form['sex']
         with sqlite3.connect("database.db") as con:
             cur = con.cursor()
-            # print(id, username, depart, idnumber, sex)
             cur.execute("update userinfo set username=?, depart=?, idnumber=?, sex=? where id =?",
                         (username, depart, idnumber, sex, id))
             con.commit()
-            msg = "Update  " + id + "  successfully"
+            message = id + "修改成功"
     except:
         con.rollback()
-        msg = "Update operation failed"
+        message = "修改失败"
 
     finally:
-        return render_template("result.html", msg=msg)
+        return render_template("result.html", msg=message)
 
 
-# 删除学生信息 相当于注销账号
-@app.route('/deleteuserinfo/<int:id>')
-def deleteuserinfo(id):
-    global msg
+# 删除学生信息
+@app.route('/deleteuser/<int:id>')
+def deleteuser(id):
+    message = None
     try:
         with sqlite3.connect("database.db") as con:
             cur = con.cursor()
             # 删除信息
             n = cur.execute("delete from userinfo where id =?", (id,))
-            # 删课程
+            # 删寝室
             cur.execute("delete from course where id =?", (id,))
             # 删除密码
             cur.execute("delete from user where id =?", (id,))
             print(n.rowcount)
             con.commit()
-            msg = "Delete  " + str(id) + "  successfully"
+            message = str(id) + "删除成功"
     except:
         con.rollback()
-        msg = 'Delete failed'
+        message = '删除失败'
     finally:
-        return render_template("result.html", msg=msg)
+        return render_template("result.html", msg=message)
 
 
-"""密码表的操作"""
+"""
+
+密码表的操作
+
+"""
 
 
-# 登录得到用户的身份，出错就显示密码错了
+# 用户登录
 @app.route('/')
-def loginpage():
+def menu():
     return render_template('login+.html')
 
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    msg = None
+    message = None
     if request.method == 'POST':
         try:
             id = request.form['id']
@@ -155,69 +158,70 @@ def login():
                 if role:
                     return redirect(url_for('home'))
                 else:
-                    msg = '帐号或密码错误！'
-                    return render_template('login+.html', msg=msg)
+                    message = '帐号或密码错误'
+                    return render_template('login+.html', msg=message)
         except:
-            print('error happens when handling login')
+            print('登录时发生错误')
         finally:
             con.close()
 
 
 # 修改密码
-@app.route('/updatepwdpage')
-def updatepwdpage():
-    return render_template('updatepwd.html')
+@app.route('/ModifyPasswd0')
+def ModifyPasswd0():
+    return render_template('modifypasswd.html')
 
 
-@app.route('/updatepwd', methods=['POST', 'GET'])
-def updatepwd():
-    msg = None
+@app.route('/ModifyPasswd', methods=['POST', 'GET'])
+def ModifyPasswd():
     if request.method == 'POST':
-        # 没有登录
         id = request.form['id']
         oldpassword = request.form['oldpassword']
         newpassword = request.form['newpassword']
         newpassword1 = request.form['newpassword1']
-        # 两次填写的新密码不一样
         if newpassword != newpassword1:
-            return render_template('updatepwd.html', msg='The passwords filled in twice are inconsistent')
+            return render_template('modifypasswd.html', msg='两次密码输入不同')
         try:
             with sqlite3.connect("database.db") as con:
                 cur = con.cursor()
                 result = cur.execute("select * from user where id=? and password=?", (id, md5(oldpassword))).fetchall()
                 if result:
                     updates = cur.execute('update user set password=? where id = ?', (md5(newpassword), id)).fetchall()
-                    msg = str(id) + ' password changed  successfully!'
-                    return render_template('login+.html', msg=msg)
+                    message = str(id) + '密码修改成功'
+                    return render_template('login+.html', msg=message)
                 else:
-                    msg = 'password changed failed'
-                    return render_template('updatepwd.html', msg=msg)
+                    message = '密码修改失败'
+                    return render_template('modifypasswd.html', msg=message)
         except:
-            print('error')
+            print('发生错误')
             con.rollback()
         finally:
             con.close()
 
 
-"""课程信息的操作 course"""
+"""
+
+寝室操作
+
+"""
 
 
-# 添加课程啊
-@app.route('/addcoursepage')
-def addcoursepage():
-    return render_template('addcourse.html')
+# 添加课程
+@app.route('/AddDormitory0')
+def AddDormitory0():
+    return render_template('adddormitory.html')
 
 
-@app.route('/addcourse', methods=['POST', 'GET'])
-def addcourse():
-    msg = None
+@app.route('/AddDormitory', methods=['POST', 'GET'])
+def AddDormitory():
+    message = None
     if request.method == 'POST':
         try:
-            id = request.form['id']
-            courseid = request.form['courseid']
-            coursename = request.form['coursename']
-            teachername = request.form['teachername']
-            score = request.form['score']
+            id = request.form['id']                         # 帐号/QQ号
+            courseid = request.form['courseid']             # 未使用
+            coursename = request.form['coursename']         # 寝室号
+            teachername = request.form['teachername']       # 寝室长姓名
+            score = request.form['score']                   # 用水量
             print(id, courseid, coursename, teachername, score)
             with sqlite3.connect("database.db") as con:
                 cur = con.cursor()
@@ -225,12 +229,12 @@ def addcourse():
                 cur.execute("insert into course(id,courseid,coursename,teachername,score) values(?,?,?,?,?)",
                             (id, courseid, coursename, teachername, score))
                 con.commit()
-                msg = "Record  " + coursename + "  successfully added"
+                message = coursename + "寝室添加成功"
         except:
             con.rollback()
-            msg = "error in insert course operation"
+            message = "寝室添加失败"
         finally:
-            return render_template("result.html", msg=msg)
+            return render_template("result.html", msg=message)
 
 
 # 查看全部课程信息
@@ -244,22 +248,21 @@ def listcourse():
     return render_template("listcourse.html", rows=rows)
 
 
-# 删除学生的课程
-@app.route('/deleteusercourse/<int:id>')
-def deleteusercourse(id):
-    global msg
+# 删除寝室
+@app.route('/deletedordormitory/<int:id>')
+def deletedormitory(id):
     try:
         with sqlite3.connect("database.db") as con:
             cur = con.cursor()
             n = cur.execute("delete from course where id =?", (id,))
             print(n.rowcount)
             con.commit()
-            msg = "Delete  " + str(id) + " course  successfully"
+            message = str(id) + "寝室删除失败"
     except:
         con.rollback()
-        msg = 'Delete user\'s course failed'
+        message = '寝室删除失败'
     finally:
-        return render_template("result.html", msg=msg)
+        return render_template("result.html", msg=message)
 
 
 # 删除课程

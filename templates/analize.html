@@ -11,12 +11,12 @@
       <div id="tablesDiv">
       <table id="tabDiv1">
          <thead>
-            <th>userid</th>
-            <th>username</th>
-            <th>sex</th>
-            <th>sum</th>
-            <th>count</th>
-            <th>average</th>
+            <th>帐号</th>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>总计</th>
+            <th>排名</th>
+            <th>平均用量</th>
          </thead>
 
          {% for row in rows %}
@@ -31,10 +31,10 @@
          {% endfor %}
       </table>
       </div>
-      <button onclick="exp();">export to excel...</button>
+      <button onclick="exp();">导出为Excel</button>
    <script>
        function exp() {
-     tablesToExcel(['tabDiv1',], ['成绩总排名'], "paiming.xls", "Excel");
+     tablesToExcel(['tabDiv1',], ['用水情况'], "water.xls", "Excel");
  }
  //导出excel包含多个sheet
  //tables:tableId的数组;wsbames:sheet的名字数组;wbname:工作簿名字;appname:Excel
