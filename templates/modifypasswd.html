@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>updatepwd</title>
+    <style type="text/css">
+        p span{display:inline-block;width: 200px;}
+    </style>
+</head>
+<body>
+<form action="{{ url_for('ModifyPasswd') }}" method="post">
+    <p>帐号：<span></span><input type="text" name="id" required autocomplete="off"></p>
+    <p>旧密码<span>: </span><input type="password" name="oldpassword" required></p>
+    <p>新密码<span>: </span><input type="password" name="newpassword" required></p>
+    <p>重复新密码<span>: </span><input type="password" name="newpassword1" required></p>
+    <input type="submit" value="确定">&nbsp;&nbsp;
+    <input type="reset" value="重置">
+</form>
+{% if msg %}
+<p>Error: <strong>{{msg}}</strong></p>
+{% endif %}
+</body>
+</html>

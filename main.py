@@ -33,13 +33,13 @@ def md5(string):
 
 
 # 添加学生
-@app.route('/addUser')
-def addUser():
+@app.route('/AddUser0')
+def AddUser0():
     return render_template('addUser.html')
 
 
-@app.route('/adduser', methods=['POST', 'GET'])
-def adduser():
+@app.route('/AddUser', methods=['POST', 'GET'])
+def AddUser():
     message = None
     if request.method == 'POST':
         try:
@@ -140,12 +140,13 @@ def deleteuser(id):
 
 # 用户登录
 @app.route('/')
-def login():
+def menu():
     return render_template('login+.html')
 
 
 @app.route('/login', methods=['POST', 'GET'])
-def login1():
+def login():
+    message = None
     if request.method == 'POST':
         try:
             id = request.form['id']
@@ -166,20 +167,20 @@ def login1():
 
 
 # 修改密码
-@app.route('/modifypasswd')
-def modifypasswd():
-    return render_template('updatepwd.html')
+@app.route('/ModifyPasswd0')
+def ModifyPasswd0():
+    return render_template('modifypasswd.html')
 
 
-@app.route('/updatepwd', methods=['POST', 'GET'])
-def updatepwd():
+@app.route('/ModifyPasswd', methods=['POST', 'GET'])
+def ModifyPasswd():
     if request.method == 'POST':
         id = request.form['id']
         oldpassword = request.form['oldpassword']
         newpassword = request.form['newpassword']
         newpassword1 = request.form['newpassword1']
         if newpassword != newpassword1:
-            return render_template('updatepwd.html', msg='两次密码输入不同')
+            return render_template('modifypasswd.html', msg='两次密码输入不同')
         try:
             with sqlite3.connect("database.db") as con:
                 cur = con.cursor()
@@ -190,7 +191,7 @@ def updatepwd():
                     return render_template('login+.html', msg=message)
                 else:
                     message = '密码修改失败'
-                    return render_template('updatepwd.html', msg=message)
+                    return render_template('modifypasswd.html', msg=message)
         except:
             print('发生错误')
             con.rollback()
@@ -205,14 +206,14 @@ def updatepwd():
 """
 
 
-# 添加课程啊
-@app.route('/addcourse')
-def addcourse():
-    return render_template('addcourse.html')
+# 添加课程
+@app.route('/AddDormitory0')
+def AddDormitory0():
+    return render_template('adddormitory.html')
 
 
-@app.route('/addcourse', methods=['POST', 'GET'])
-def addcourse1():
+@app.route('/AddDormitory', methods=['POST', 'GET'])
+def AddDormitory():
     message = None
     if request.method == 'POST':
         try:
