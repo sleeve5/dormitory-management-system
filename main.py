@@ -141,25 +141,30 @@ def deleteuser(id):
 # 用户登录
 @app.route('/')
 def menu():
-    return render_template('login+.html')
+    return render_template('login.html')
 
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     message = None
+    code = 0
     if request.method == 'POST':
         try:
             id = request.form['id']
             password = request.form['password']
+            code = request.form['code']
             with sqlite3.connect("database.db") as con:
                 cur = con.cursor()
                 role = cur.execute("select role from user where id=? and password=?", (id, md5(password))).fetchall()
                 print(role)
+                if code != '7364':
+                    message = '验证码错误'
+                    return render_template('login.html', msg=message)
                 if role:
                     return redirect(url_for('home'))
                 else:
                     message = '帐号或密码错误'
-                    return render_template('login+.html', msg=message)
+                    return render_template('login.html', msg=message)
         except:
             print('登录时发生错误')
         finally:
@@ -188,7 +193,7 @@ def ModifyPasswd():
                 if result:
                     updates = cur.execute('update user set password=? where id = ?', (md5(newpassword), id)).fetchall()
                     message = str(id) + '密码修改成功'
-                    return render_template('login+.html', msg=message)
+                    return render_template('login.html', msg=message)
                 else:
                     message = '密码修改失败'
                     return render_template('modifypasswd.html', msg=message)
