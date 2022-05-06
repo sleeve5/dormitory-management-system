@@ -1,5 +1,5 @@
 import sqlite3
-
+import hashlib
 from flask import render_template, request, Flask, url_for
 from werkzeug.utils import redirect
 
@@ -19,9 +19,12 @@ def about():
     return render_template('about.html')
 
 
-# 使用md5加密(未使用)
+# 使用md5加密
 def md5(string):
-    c = string
+    m = hashlib.md5()
+    m.update(string)
+    c = m.hexdigest()
+    # a = string
     return c
 
 
@@ -144,8 +147,18 @@ def menu():
     return render_template('login.html')
 
 
-@app.route('/login', methods=['POST', 'GET'])
-def login():
+@app.route('/login0')
+def menu0():
+    return render_template('login.html')
+
+
+@app.route('/login1')
+def menu1():
+    return render_template('login1.html')
+
+
+@app.route('/login0', methods=['POST', 'GET'])
+def login0():
     message = None
     code = 0
     if request.method == 'POST':
@@ -161,12 +174,41 @@ def login():
                     message = '验证码错误'
                     return render_template('login.html', msg=message)
                 if role:
-                    return redirect(url_for('home'))
+                    return render_template('index.html')
                 else:
                     message = '帐号或密码错误'
                     return render_template('login.html', msg=message)
         except:
             print('登录时发生错误')
+            return render_template('index.html')
+        finally:
+            con.close()
+
+
+@app.route('/login1', methods=['POST', 'GET'])
+def login1():
+    message = None
+    code = 0
+    if request.method == 'POST':
+        try:
+            id = request.form['id']
+            password = request.form['password']
+            code = request.form['code']
+            with sqlite3.connect("database.db") as con:
+                cur = con.cursor()
+                role = cur.execute("select role from user where id=? and password=?", (id, md5(password))).fetchall()
+                print(role)
+                if code != 'uwv6':
+                    message = '验证码错误'
+                    return render_template('login1.html', msg=message)
+                if role:
+                    return redirect(url_for('home'))
+                else:
+                    message = '帐号或密码错误'
+                    return render_template('login1.html', msg=message)
+        except:
+            print('登录时发生错误')
+            return render_template('index.html')
         finally:
             con.close()
 
